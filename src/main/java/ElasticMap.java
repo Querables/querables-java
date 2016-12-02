@@ -5,10 +5,11 @@ import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ElasticMap<K, V> implements Map<K, V> {
+public class ElasticMap<K, V> {
 
     private final Class<K> keyType;
     private final List<Field> keyFields;
+    private final Map<K, V> map = new HashMap<>();
 
     public ElasticMap(Class keyType) {
         if (keyType == null)
@@ -41,16 +42,17 @@ public class ElasticMap<K, V> implements Map<K, V> {
         return false;
     }
 
-    public V get(Object key) {
+    public Collection<V> get(Object key) {
         assertValidKeyType(key);
-        return null;
+        V result = map.get(key);
+        return result == null ? Collections.emptyList() : Collections.singletonList(result);
     }
 
-    public V put(K key, V value) {
+    public void put(K key, V value) {
         assertValidKeyType(key);
         List<Object> keyList = convertToList(key);
         assertNonNullFields(keyList);
-        return null;
+        map.put(key, value);
     }
 
     private List<Object> convertToList(K key) {
@@ -97,7 +99,7 @@ public class ElasticMap<K, V> implements Map<K, V> {
         return null;
     }
 
-    public Set<Entry<K, V>> entrySet() {
+    public Set<Map.Entry<K, V>> entrySet() {
         return null;
     }
 }
