@@ -101,7 +101,7 @@ public class ElasticMap<K, V> {
     }
 
     public boolean isEmpty() {
-        return false;
+        return rootSize == 0;
     }
 
     public boolean containsKey(Object o) {
