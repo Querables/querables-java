@@ -9,7 +9,12 @@ public class ElasticMap<K, V> {
 
     private final Class<K> keyType;
     private final List<Field> keyFields;
-    private final Map<K, V> map = new HashMap<>();
+    private final Node rootNode = new Node();
+
+    private class Node {
+        final Map<Object, Node> children = new HashMap<>();
+        V value = null;
+    }
 
     public ElasticMap(Class keyType) {
         if (keyType == null)
@@ -26,33 +31,42 @@ public class ElasticMap<K, V> {
         }).collect(Collectors.toList());
     }
 
-    public int size() {
-        return 0;
-    }
-
-    public boolean isEmpty() {
-        return false;
-    }
-
-    public boolean containsKey(Object o) {
-        return false;
-    }
-
-    public boolean containsValue(Object o) {
-        return false;
-    }
-
-    public Collection<V> get(Object key) {
+    public Collection<V> get(K key) {
         assertValidKeyType(key);
-        V result = map.get(key);
-        return result == null ? Collections.emptyList() : Collections.singletonList(result);
+        List<Object> keyValues = convertToList(key);
+
+        List<Node> nodes = Collections.singletonList(rootNode);
+        for (Object keyValue : keyValues) {
+            if (keyValue == null) {
+                nodes = nodes.stream()
+                        .flatMap(node -> node.children.values().stream())
+                        .collect(Collectors.toList());
+            }
+            else {
+                nodes = nodes.stream()
+                        .map(node -> node.children.get(keyValue))
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toList());
+            }
+        }
+
+        return nodes.stream()
+                .map(node -> node.value)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
     }
 
     public void put(K key, V value) {
         assertValidKeyType(key);
-        List<Object> keyList = convertToList(key);
-        assertNonNullFields(keyList);
-        map.put(key, value);
+        List<Object> keyValues = convertToList(key);
+        assertNonNullFields(keyValues);
+
+        Node node = rootNode;
+        for (Object keyValue : keyValues) {
+            node.children.putIfAbsent(keyValue, new Node());
+            node = node.children.get(keyValue);
+        }
+        node.value = value;
     }
 
     private List<Object> convertToList(K key) {
@@ -71,12 +85,28 @@ public class ElasticMap<K, V> {
             throw new NullKeyException();
         Class actualType = key.getClass();
         if (actualType != keyType)
-            throw new InvalidKeyException(keyType, actualType);
+            throw new InvalidKeyTypeException(keyType, actualType);
     }
 
     private static void assertNonNullFields(List<Object> key) {
         if (key.stream().anyMatch(Objects::isNull))
             throw new NullFieldException(key);
+    }
+
+    public int size() {
+        return 0;
+    }
+
+    public boolean isEmpty() {
+        return false;
+    }
+
+    public boolean containsKey(Object o) {
+        return false;
+    }
+
+    public boolean containsValue(Object o) {
+        return false;
     }
 
     public V remove(Object o) {
