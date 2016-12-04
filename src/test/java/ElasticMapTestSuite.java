@@ -6,7 +6,8 @@ import org.junit.runners.Suite;
         ElasticMapGetTest.class,
         ElasticMapSizeTest.class,
         ElasticMapIsEmptyTest.class,
-        ElasticMapContainsKeyTest.class
+        ElasticMapContainsKeyTest.class,
+        ElasticMapContainsValueTest.class
 })
 public class ElasticMapTestSuite {
 }

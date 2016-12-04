@@ -14,7 +14,7 @@ public class ElasticMap<K, V> {
 
     private class Node {
         final Map<Object, Node> children = new HashMap<>();
-        V value = null;
+        ValueHolder<V> value = new ValueHolder<>();
     }
 
     public ElasticMap(Class keyType) {
@@ -35,7 +35,8 @@ public class ElasticMap<K, V> {
     public Collection<V> get(K key) {
         return getMatchingNodes(key).stream()
                 .map(node -> node.value)
-                .filter(Objects::nonNull)
+                .filter(ValueHolder::isSet)
+                .map(ValueHolder::getValue)
                 .collect(Collectors.toList());
     }
 
@@ -49,9 +50,10 @@ public class ElasticMap<K, V> {
             node.children.putIfAbsent(keyValue, new Node());
             node = node.children.get(keyValue);
         }
-        if (node.value == null)
+        if (!node.value.isSet()) {
             rootSize += 1;
-        node.value = value;
+        }
+        node.value.setValue(value);
     }
 
     private List<Object> convertToList(K key) {
@@ -113,6 +115,15 @@ public class ElasticMap<K, V> {
     }
 
     public boolean containsValue(Object o) {
+        List<Node> nodes = Collections.singletonList(rootNode);
+        while (!nodes.isEmpty()) {
+            if (nodes.stream().anyMatch(n -> n.value.isSet() && n.value.getValue() == o)) {
+                return true;
+            }
+            nodes = nodes.stream()
+                    .flatMap(n -> n.children.values().stream())
+                    .collect(Collectors.toList());
+        }
         return false;
     }
 
