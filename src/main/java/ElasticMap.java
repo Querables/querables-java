@@ -33,25 +33,7 @@ public class ElasticMap<K, V> {
     }
 
     public Collection<V> get(K key) {
-        assertValidKeyType(key);
-        List<Object> keyValues = convertToList(key);
-
-        List<Node> nodes = Collections.singletonList(rootNode);
-        for (Object keyValue : keyValues) {
-            if (keyValue == null) {
-                nodes = nodes.stream()
-                        .flatMap(node -> node.children.values().stream())
-                        .collect(Collectors.toList());
-            }
-            else {
-                nodes = nodes.stream()
-                        .map(node -> node.children.get(keyValue))
-                        .filter(Objects::nonNull)
-                        .collect(Collectors.toList());
-            }
-        }
-
-        return nodes.stream()
+        return getMatchingNodes(key).stream()
                 .map(node -> node.value)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
@@ -104,8 +86,30 @@ public class ElasticMap<K, V> {
         return rootSize == 0;
     }
 
-    public boolean containsKey(Object o) {
-        return false;
+    public boolean containsKey(K key) {
+        return !getMatchingNodes(key).isEmpty();
+    }
+
+    private List<Node> getMatchingNodes(K key) {
+        assertValidKeyType(key);
+        List<Object> keyValues = convertToList(key);
+
+        List<Node> nodes = Collections.singletonList(rootNode);
+        for (Object keyValue : keyValues) {
+            if (keyValue == null) {
+                nodes = nodes.stream()
+                        .flatMap(node -> node.children.values().stream())
+                        .collect(Collectors.toList());
+            }
+            else {
+                nodes = nodes.stream()
+                        .map(node -> node.children.get(keyValue))
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toList());
+            }
+        }
+
+        return nodes;
     }
 
     public boolean containsValue(Object o) {
