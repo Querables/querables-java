@@ -10,6 +10,7 @@ public class ElasticMap<K, V> {
     private final Class<K> keyType;
     private final List<Field> keyFields;
     private final Node rootNode = new Node();
+    private int rootSize = 0;
 
     private class Node {
         final Map<Object, Node> children = new HashMap<>();
@@ -66,6 +67,8 @@ public class ElasticMap<K, V> {
             node.children.putIfAbsent(keyValue, new Node());
             node = node.children.get(keyValue);
         }
+        if (node.value == null)
+            rootSize += 1;
         node.value = value;
     }
 
@@ -94,7 +97,7 @@ public class ElasticMap<K, V> {
     }
 
     public int size() {
-        return 0;
+        return rootSize;
     }
 
     public boolean isEmpty() {

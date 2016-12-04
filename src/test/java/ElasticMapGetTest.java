@@ -4,12 +4,14 @@ import lombok.val;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class ElasticMapTest {
+public class ElasticMapGetTest {
 
     private static final String IMPORTANT = "IMPORTANT";
     private static final ValidKey VALID_KEY = new ValidKey("first", "second", "third");
