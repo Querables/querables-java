@@ -14,7 +14,6 @@ import static org.junit.Assert.assertTrue;
 public class ElasticMapGetTest {
 
     private static final String IMPORTANT = "IMPORTANT";
-    private static final ValidKey VALID_KEY = new ValidKey("first", "second", "third");
     private static final Object VALUE = new Object();
 
     private static class KeyWithoutGetters {
@@ -66,20 +65,20 @@ public class ElasticMapGetTest {
 
     @Test
     public void getReturnsEmptyWhenKeyDoesNotExist() {
-        assertTrue(sut.get(VALID_KEY).isEmpty());
+        assertTrue(sut.get(ValidKey.FIRST).isEmpty());
     }
 
     @Test
     public void getSameKeyAsPut() {
-        sut.put(VALID_KEY, VALUE);
-        assertEquals(Collections.singletonList(VALUE), sut.get(VALID_KEY));
+        sut.put(ValidKey.FIRST, VALUE);
+        assertEquals(Collections.singletonList(VALUE), sut.get(ValidKey.FIRST));
     }
 
     @Test
     public void replaceValueWithSameKey() {
-        sut.put(VALID_KEY, new Object());
-        sut.put(VALID_KEY, VALUE);
-        assertEquals(Collections.singletonList(VALUE), sut.get(VALID_KEY));
+        sut.put(ValidKey.FIRST, new Object());
+        sut.put(ValidKey.FIRST, VALUE);
+        assertEquals(Collections.singletonList(VALUE), sut.get(ValidKey.FIRST));
     }
 
     @Test

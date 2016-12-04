@@ -29,13 +29,13 @@ public class ElasticMapContainsKeyTest {
 
     @Test
     public void falseByDefault() {
-        assertFalse(sut.containsKey(new ValidKey("first", "second", "third")));
+        assertFalse(sut.containsKey(ValidKey.FIRST));
     }
 
     @Test
     public void falseForNonMatchingKey() {
-        sut.put(new ValidKey("first1", "second1", "third1"), new Object());
-        assertFalse(sut.containsKey(new ValidKey("first2", "second2", "third2")));
+        sut.put(ValidKey.FIRST, new Object());
+        assertFalse(sut.containsKey(ValidKey.SECOND));
     }
 
     @Test

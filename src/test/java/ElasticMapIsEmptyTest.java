@@ -20,7 +20,7 @@ public class ElasticMapIsEmptyTest {
 
     @Test
     public void nonEmptyAfterPut() {
-        sut.put(new ValidKey("first", "second", "third"), new Object());
+        sut.put(ValidKey.FIRST, new Object());
         assertFalse(sut.isEmpty());
     }
 

@@ -19,8 +19,8 @@ public class ElasticMapSizeTest {
 
     @Test
     public void twoForTwoTotallyDifferetPuts() {
-        sut.put(new ValidKey("first1", "second1", "third1"), new Object());
-        sut.put(new ValidKey("first2", "second2", "third2"), new Object());
+        sut.put(ValidKey.FIRST, new Object());
+        sut.put(ValidKey.SECOND, new Object());
         assertEquals(2, sut.size());
     }
 
@@ -33,8 +33,8 @@ public class ElasticMapSizeTest {
 
     @Test
     public void oneForTwoDuplicates() {
-        sut.put(new ValidKey("first", "second", "third"), new Object());
-        sut.put(new ValidKey("first", "second", "third"), new Object());
+        sut.put(ValidKey.FIRST, new Object());
+        sut.put(ValidKey.FIRST, new Object());
         assertEquals(1, sut.size());
     }
 
