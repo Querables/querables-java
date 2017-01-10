@@ -140,7 +140,11 @@ public class ElasticMap<K, V> {
         rootSize = 0;
     }
 
-    public Set<Map.Entry<K, V>> entrySet() {
-        return null;
+    public Set<Pair<K, V>> entrySet(K key) {
+        return getMatchingNodes(key).stream()
+                .map(Node::getKeyValueHolder)
+                .filter(KeyValueHolder::isSet)
+                .map(KeyValueHolder::get)
+                .collect(Collectors.toSet());
     }
 }
