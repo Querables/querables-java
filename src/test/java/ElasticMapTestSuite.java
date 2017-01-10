@@ -8,7 +8,8 @@ import org.junit.runners.Suite;
         ElasticMapIsEmptyTest.class,
         ElasticMapContainsKeyTest.class,
         ElasticMapContainsValueTest.class,
-        ElasticMapKeySetTest.class
+        ElasticMapKeySetTest.class,
+        ElasticMapValuesTest.class
 })
 public class ElasticMapTestSuite {
 }

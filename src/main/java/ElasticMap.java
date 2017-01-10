@@ -14,6 +14,7 @@ public class ElasticMap<K, V> {
     private Node<V> rootNode = new Node<>(null);
     private int rootSize = 0;
     private Set<K> keySet = new HashSet<>();
+    private Set<V> values = new HashSet<>();
 
     public ElasticMap(Class<K> keyType) {
         if (keyType == null)
@@ -50,6 +51,7 @@ public class ElasticMap<K, V> {
         }
         if (!node.getValueHolder().isSet()) {
             rootSize += 1;
+            values.add(value);
         }
         node.getValueHolder().setValue(value);
 
@@ -129,8 +131,11 @@ public class ElasticMap<K, V> {
 
     public void remove(K key) {
         List<Node<V>> nodes = getMatchingNodes(key);
-        nodes.forEach(Node::removeItself);
-        keySet.remove(key);
+        for (Node node : nodes) {
+            keySet.remove(key);
+            values.remove(node.getValueHolder().getValue());
+            node.removeItself();
+        }
     }
 
     public void putAll(Map<? extends K, ? extends V> map) {
@@ -141,6 +146,7 @@ public class ElasticMap<K, V> {
         rootNode = new Node<>(null);
         rootSize = 0;
         keySet.clear();
+        values.clear();
     }
 
     public Set<K> keySet() {
@@ -148,7 +154,7 @@ public class ElasticMap<K, V> {
     }
 
     public Collection<V> values() {
-        return null;
+        return values;
     }
 
     public Set<Map.Entry<K, V>> entrySet() {
