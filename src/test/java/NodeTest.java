@@ -17,11 +17,11 @@ public class NodeTest {
 
     @Test
     public void removesOnlyItselfFromParent() {
-        Node<Object> parent = new Node<>(null);
+        Node<Object, Object> parent = new Node<>(null);
         val key = "key";
         val anotherKey = "anotherKey";
-        Node<Object> node = new Node<>(new Pair<>(key, parent));
-        Node<Object> anotherNode = new Node<>(new Pair<>(anotherKey, parent));
+        Node<Object, Object> node = new Node<>(new Pair<>(key, parent));
+        Node<Object, Object> anotherNode = new Node<>(new Pair<>(anotherKey, parent));
         parent.getChildren().put(key, node);
         parent.getChildren().put(anotherKey, anotherNode);
 

@@ -2,17 +2,15 @@ import lombok.val;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Objects;
-
 import static org.junit.Assert.*;
 
-public class ValueHolderTest {
+public class KeyValueHolderTest {
 
-    private ValueHolder<Object> sut;
+    private KeyValueHolder<Object, Object> sut;
 
     @Before
     public void setUp() throws Exception {
-        sut = new ValueHolder<>();
+        sut = new KeyValueHolder<>();
     }
 
     @Test
@@ -22,20 +20,22 @@ public class ValueHolderTest {
 
     @Test(expected = NullPointerException.class)
     public void throwsWhenTryingToGetUnsetValue() {
-        sut.getValue();
+        sut.get();
     }
 
     @Test
     public void answersTrueWhenSet() {
-        sut.setValue(new Object());
+        sut.set(new Object(), new Object());
         assertTrue(sut.isSet());
     }
 
     @Test
-    public void returnsValidValue() {
-        val object = new Object();
-        sut.setValue(object);
-        assertSame(object, sut.getValue());
+    public void returnsValidKeyAndValue() {
+        val key = new Object();
+        val value = new Object();
+        sut.set(key, value);
+        assertSame(key, sut.get().getKey());
+        assertSame(value, sut.get().getValue());
     }
 
 }

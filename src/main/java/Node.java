@@ -5,12 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Getter
-class Node<T> {
-    private final Pair<Object, Node<T>> parentRef;
-    private final Map<Object, Node<T>> children = new HashMap<>();
-    private ValueHolder<T> valueHolder = new ValueHolder<>();
+class Node<K, T> {
+    private final Pair<Object, Node<K, T>> parentRef;
+    private final Map<Object, Node<K, T>> children = new HashMap<>();
+    private KeyValueHolder<K, T> keyValueHolder = new KeyValueHolder<>();
 
-    Node(Pair<Object, Node<T>> parentRef) {
+    Node(Pair<Object, Node<K, T>> parentRef) {
         this.parentRef = parentRef;
     }
 
