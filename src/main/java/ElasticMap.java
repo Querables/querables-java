@@ -1,6 +1,7 @@
 import exceptions.*;
 import javafx.util.Pair;
 import lombok.SneakyThrows;
+import lombok.val;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -12,6 +13,7 @@ public class ElasticMap<K, V> {
     private final List<Field> keyFields;
     private Node<V> rootNode = new Node<>(null);
     private int rootSize = 0;
+    private Set<K> keySet = new HashSet<>();
 
     public ElasticMap(Class<K> keyType) {
         if (keyType == null)
@@ -50,6 +52,8 @@ public class ElasticMap<K, V> {
             rootSize += 1;
         }
         node.getValueHolder().setValue(value);
+
+        keySet.add(key);
     }
 
     private List<Object> convertToList(K key) {
@@ -126,6 +130,7 @@ public class ElasticMap<K, V> {
     public void remove(K key) {
         List<Node<V>> nodes = getMatchingNodes(key);
         nodes.forEach(Node::removeItself);
+        keySet.remove(key);
     }
 
     public void putAll(Map<? extends K, ? extends V> map) {
@@ -135,10 +140,11 @@ public class ElasticMap<K, V> {
     public void clear() {
         rootNode = new Node<>(null);
         rootSize = 0;
+        keySet.clear();
     }
 
     public Set<K> keySet() {
-        return null;
+        return keySet;
     }
 
     public Collection<V> values() {
