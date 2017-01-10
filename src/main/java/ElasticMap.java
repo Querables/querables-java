@@ -63,7 +63,7 @@ public class ElasticMap<K, V> {
         return field.get(object);
     }
 
-    private void assertValidKeyType(Object key) {
+    private void assertValidKeyType(K key) {
         if (key == null)
             throw new NullKeyException();
         Class actualType = key.getClass();
@@ -110,10 +110,10 @@ public class ElasticMap<K, V> {
         return nodes;
     }
 
-    public boolean containsValue(Object o) {
+    public boolean containsValue(V value) {
         List<Node<V>> nodes = Collections.singletonList(rootNode);
         while (!nodes.isEmpty()) {
-            if (nodes.stream().anyMatch(n -> n.getValueHolder().isSet() && n.getValueHolder().getValue() == o)) {
+            if (nodes.stream().anyMatch(n -> n.getValueHolder().isSet() && n.getValueHolder().getValue() == value)) {
                 return true;
             }
             nodes = nodes.stream()
