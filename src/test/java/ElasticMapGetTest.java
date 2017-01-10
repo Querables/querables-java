@@ -28,23 +28,23 @@ public class ElasticMapGetTest {
 
     @Test(expected = NullKeyTypeException.class)
     public void throwWhenNullClassInCtor() {
-        new ElasticMap(null);
+        new ElasticMap<>(null);
     }
 
     @Test(expected = NoGettersInKeyException.class)
     public void throwWhenNoGettersInKey() {
-        new ElasticMap(KeyWithoutGetters.class);
+        new ElasticMap<>(KeyWithoutGetters.class);
     }
 
     @Test(expected = InvalidKeyTypeException.class)
     public void throwOnPutOtherThanKey() {
-        val sut = new ElasticMap(ValidKey.class);
+        val sut = new ElasticMap<>(ValidKey.class);
         sut.put(new Object(), VALUE);
     }
 
     @Test(expected = InvalidKeyTypeException.class)
     public void throwOnGetOtherThanKey() {
-        val sut = new ElasticMap(ValidKey.class);
+        val sut = new ElasticMap<>(ValidKey.class);
         sut.get(new Object());
     }
 
