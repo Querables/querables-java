@@ -6,7 +6,7 @@ import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ElasticMap<K, V> {
+public class ElasticMap<K, V> implements EMap<K, V> {
 
     private final Class<K> keyType;
     private final List<Field> keyFields;
