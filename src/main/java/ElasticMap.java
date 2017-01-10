@@ -1,4 +1,5 @@
 import exceptions.*;
+import javafx.util.Pair;
 import lombok.SneakyThrows;
 
 import java.lang.reflect.Field;
@@ -9,15 +10,10 @@ public class ElasticMap<K, V> {
 
     private final Class<K> keyType;
     private final List<Field> keyFields;
-    private final Node rootNode = new Node();
+    private final Node<V> rootNode = new Node<>(null);
     private int rootSize = 0;
 
-    private class Node {
-        final Map<Object, Node> children = new HashMap<>();
-        ValueHolder<V> value = new ValueHolder<>();
-    }
-
-    public ElasticMap(Class keyType) {
+    public ElasticMap(Class<K> keyType) {
         if (keyType == null)
             throw new NullKeyTypeException();
 
@@ -34,7 +30,7 @@ public class ElasticMap<K, V> {
 
     public Collection<V> get(K key) {
         return getMatchingNodes(key).stream()
-                .map(node -> node.value)
+                .map(Node::getValueHolder)
                 .filter(ValueHolder::isSet)
                 .map(ValueHolder::getValue)
                 .collect(Collectors.toList());
@@ -45,15 +41,15 @@ public class ElasticMap<K, V> {
         List<Object> keyValues = convertToList(key);
         assertNonNullFields(keyValues);
 
-        Node node = rootNode;
+        Node<V> node = rootNode;
         for (Object keyValue : keyValues) {
-            node.children.putIfAbsent(keyValue, new Node());
-            node = node.children.get(keyValue);
+            node.getChildren().putIfAbsent(keyValue, new Node<>(new Pair<>(keyValue, node)));
+            node = node.getChildren().get(keyValue);
         }
-        if (!node.value.isSet()) {
+        if (!node.getValueHolder().isSet()) {
             rootSize += 1;
         }
-        node.value.setValue(value);
+        node.getValueHolder().setValue(value);
     }
 
     private List<Object> convertToList(K key) {
@@ -92,20 +88,20 @@ public class ElasticMap<K, V> {
         return !getMatchingNodes(key).isEmpty();
     }
 
-    private List<Node> getMatchingNodes(K key) {
+    private List<Node<V>> getMatchingNodes(K key) {
         assertValidKeyType(key);
         List<Object> keyValues = convertToList(key);
 
-        List<Node> nodes = Collections.singletonList(rootNode);
+        List<Node<V>> nodes = Collections.singletonList(rootNode);
         for (Object keyValue : keyValues) {
             if (keyValue == null) {
                 nodes = nodes.stream()
-                        .flatMap(node -> node.children.values().stream())
+                        .flatMap(node -> node.getChildren().values().stream())
                         .collect(Collectors.toList());
             }
             else {
                 nodes = nodes.stream()
-                        .map(node -> node.children.get(keyValue))
+                        .map(node -> node.getChildren().get(keyValue))
                         .filter(Objects::nonNull)
                         .collect(Collectors.toList());
             }
@@ -115,20 +111,21 @@ public class ElasticMap<K, V> {
     }
 
     public boolean containsValue(Object o) {
-        List<Node> nodes = Collections.singletonList(rootNode);
+        List<Node<V>> nodes = Collections.singletonList(rootNode);
         while (!nodes.isEmpty()) {
-            if (nodes.stream().anyMatch(n -> n.value.isSet() && n.value.getValue() == o)) {
+            if (nodes.stream().anyMatch(n -> n.getValueHolder().isSet() && n.getValueHolder().getValue() == o)) {
                 return true;
             }
             nodes = nodes.stream()
-                    .flatMap(n -> n.children.values().stream())
+                    .flatMap(n -> n.getChildren().values().stream())
                     .collect(Collectors.toList());
         }
         return false;
     }
 
-    public V remove(Object o) {
-        return null;
+    public void remove(K key) {
+        List<Node<V>> nodes = getMatchingNodes(key);
+        nodes.forEach(Node::removeItself);
     }
 
     public void putAll(Map<? extends K, ? extends V> map) {

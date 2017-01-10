@@ -5,16 +5,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Getter
-public class Node<T> {
+class Node<T> {
     private final Pair<Object, Node<T>> parentRef;
-    private final Map<Object, Node> children = new HashMap<>();
-    private ValueHolder<T> value = new ValueHolder<>();
+    private final Map<Object, Node<T>> children = new HashMap<>();
+    private ValueHolder<T> valueHolder = new ValueHolder<>();
 
-    public Node(Pair<Object, Node<T>> parentRef) {
+    Node(Pair<Object, Node<T>> parentRef) {
         this.parentRef = parentRef;
     }
 
-    public void removeItself() {
+    void removeItself() {
         if (parentRef == null)
             return;
         parentRef.getValue().children.remove(parentRef.getKey());

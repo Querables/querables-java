@@ -129,4 +129,11 @@ public class ElasticMapGetTest {
                 sut.get(new ValidKey(null, null, IMPORTANT)));
     }
 
+    @Test
+    public void returnsEmptyWhenExactKeyHasBeenRemoved() {
+        sut.put(ValidKey.FIRST, new Object());
+        sut.remove(ValidKey.FIRST);
+        assertTrue(sut.get(ValidKey.FIRST).isEmpty());
+    }
+
 }
