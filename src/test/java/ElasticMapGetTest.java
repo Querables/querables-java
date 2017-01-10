@@ -38,13 +38,13 @@ public class ElasticMapGetTest {
 
     @Test(expected = InvalidKeyTypeException.class)
     public void throwOnPutOtherThanKey() {
-        val sut = new ElasticMap<>(ValidKey.class);
+        val sut = new ElasticMap(ValidKey.class);
         sut.put(new Object(), VALUE);
     }
 
     @Test(expected = InvalidKeyTypeException.class)
     public void throwOnGetOtherThanKey() {
-        val sut = new ElasticMap<>(ValidKey.class);
+        val sut = new ElasticMap(ValidKey.class);
         sut.get(new Object());
     }
 

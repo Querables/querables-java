@@ -129,7 +129,7 @@ public class ElasticMap<K, V> {
     }
 
     public void putAll(Map<? extends K, ? extends V> map) {
-
+        map.forEach(this::put);
     }
 
     public void clear() {

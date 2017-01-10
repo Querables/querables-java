@@ -1,6 +1,9 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.Assert.assertEquals;
 
 public class ElasticMapSizeTest {
@@ -28,6 +31,15 @@ public class ElasticMapSizeTest {
     public void twoForTwoPartiallyDifferetPuts() {
         sut.put(new ValidKey("first1", "second", "third"), new Object());
         sut.put(new ValidKey("first2", "second", "third"), new Object());
+        assertEquals(2, sut.size());
+    }
+
+    @Test
+    public void twoForTwoPartiallyElementsInOnePut() {
+        Map<ValidKey, Object> map = new HashMap<>();
+        map.put(new ValidKey("first1", "second", "third"), new Object());
+        map.put(new ValidKey("first2", "second", "third"), new Object());
+        sut.putAll(map);
         assertEquals(2, sut.size());
     }
 
