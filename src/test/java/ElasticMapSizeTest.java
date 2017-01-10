@@ -50,4 +50,11 @@ public class ElasticMapSizeTest {
         assertEquals(1, sut.size());
     }
 
+    @Test
+    public void zeroWhenCleared() {
+        sut.put(ValidKey.FIRST, new Object());
+        sut.clear();
+        assertEquals(0, sut.size());
+    }
+
 }

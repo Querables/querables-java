@@ -136,4 +136,11 @@ public class ElasticMapGetTest {
         assertTrue(sut.get(ValidKey.FIRST).isEmpty());
     }
 
+    @Test
+    public void returnsEmptyOnceCleared() {
+        sut.put(ValidKey.FIRST, new Object());
+        sut.clear();
+        assertTrue(sut.get(ValidKey.FIRST).isEmpty());
+    }
+
 }

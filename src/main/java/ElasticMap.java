@@ -10,7 +10,7 @@ public class ElasticMap<K, V> {
 
     private final Class<K> keyType;
     private final List<Field> keyFields;
-    private final Node<V> rootNode = new Node<>(null);
+    private Node<V> rootNode = new Node<>(null);
     private int rootSize = 0;
 
     public ElasticMap(Class<K> keyType) {
@@ -133,7 +133,8 @@ public class ElasticMap<K, V> {
     }
 
     public void clear() {
-
+        rootNode = new Node<>(null);
+        rootSize = 0;
     }
 
     public Set<K> keySet() {
