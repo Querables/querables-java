@@ -6,14 +6,14 @@ import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ElasticMap<K, V> implements EMap<K, V> {
+public class QuerableMap<K, V> implements QMap<K, V> {
 
     private final Class<K> keyType;
     private final List<Field> keyFields;
     private Node<K, V> rootNode = new Node<>(null);
     private int rootSize = 0;
 
-    public ElasticMap(Class<K> keyType) {
+    public QuerableMap(Class<K> keyType) {
         if (keyType == null)
             throw new NullKeyTypeException();
 

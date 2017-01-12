@@ -7,18 +7,18 @@ import org.junit.Test;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class ElasticMapContainsKeyTest {
+public class QuerableMapContainsKeyTest {
 
-    private ElasticMap<ValidKey, Object> sut;
+    private QuerableMap<ValidKey, Object> sut;
 
     @Before
     public void setUp() {
-        sut = new ElasticMap<>(ValidKey.class);
+        sut = new QuerableMap<>(ValidKey.class);
     }
 
     @Test(expected = InvalidKeyTypeException.class)
     public void throwOnGetOtherThanKey() {
-        val sut = new ElasticMap(ValidKey.class);
+        val sut = new QuerableMap(ValidKey.class);
         sut.containsKey(new Object());
     }
 

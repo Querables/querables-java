@@ -1,2 +1,2 @@
-# ElasticMap
-Java Map implementation allowing more elastic key search.
+# QuerableMap
+Java Map implementation allowing querying.

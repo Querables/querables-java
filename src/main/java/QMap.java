@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-public interface EMap<K, V> {
+public interface QMap<K, V> {
 
     Collection<V> get(K key);
 

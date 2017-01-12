@@ -11,7 +11,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class ElasticMapGetTest {
+public class QuerableMapGetTest {
 
     private static final String IMPORTANT = "IMPORTANT";
     private static final Object VALUE = new Object();
@@ -19,32 +19,32 @@ public class ElasticMapGetTest {
     private static class KeyWithoutGetters {
     }
 
-    private ElasticMap<ValidKey, Object> sut;
+    private QuerableMap<ValidKey, Object> sut;
 
     @Before
     public void setUp() {
-        sut = new ElasticMap<>(ValidKey.class);
+        sut = new QuerableMap<>(ValidKey.class);
     }
 
     @Test(expected = NullKeyTypeException.class)
     public void throwWhenNullClassInCtor() {
-        new ElasticMap<>(null);
+        new QuerableMap<>(null);
     }
 
     @Test(expected = NoGettersInKeyException.class)
     public void throwWhenNoGettersInKey() {
-        new ElasticMap<>(KeyWithoutGetters.class);
+        new QuerableMap<>(KeyWithoutGetters.class);
     }
 
     @Test(expected = InvalidKeyTypeException.class)
     public void throwOnPutOtherThanKey() {
-        val sut = new ElasticMap(ValidKey.class);
+        val sut = new QuerableMap(ValidKey.class);
         sut.put(new Object(), VALUE);
     }
 
     @Test(expected = InvalidKeyTypeException.class)
     public void throwOnGetOtherThanKey() {
-        val sut = new ElasticMap(ValidKey.class);
+        val sut = new QuerableMap(ValidKey.class);
         sut.get(new Object());
     }
 

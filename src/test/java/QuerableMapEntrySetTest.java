@@ -5,22 +5,19 @@ import lombok.val;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Collections;
-
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class ElasticMapEntrySetTest {
+public class QuerableMapEntrySetTest {
 
     private final static Object FIRST = new Object();
     private final static Object SECOND = new Object();
 
-    private ElasticMap<ValidKey, Object> sut;
+    private QuerableMap<ValidKey, Object> sut;
 
     @Before
     public void setUp() {
-        sut = new ElasticMap<>(ValidKey.class);
+        sut = new QuerableMap<>(ValidKey.class);
     }
 
     @Test
@@ -35,7 +32,7 @@ public class ElasticMapEntrySetTest {
 
     @Test(expected = InvalidKeyTypeException.class)
     public void throwOnGetOtherThanKey() {
-        val sut = new ElasticMap(ValidKey.class);
+        val sut = new QuerableMap(ValidKey.class);
         sut.entrySet(new Object());
     }
 

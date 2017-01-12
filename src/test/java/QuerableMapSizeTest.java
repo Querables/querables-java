@@ -6,13 +6,13 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
-public class ElasticMapSizeTest {
+public class QuerableMapSizeTest {
 
-    private ElasticMap<ValidKey, Object> sut;
+    private QuerableMap<ValidKey, Object> sut;
 
     @Before
     public void setUp() {
-        sut = new ElasticMap<>(ValidKey.class);
+        sut = new QuerableMap<>(ValidKey.class);
     }
 
     @Test
