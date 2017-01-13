@@ -1,5 +1,7 @@
-import exceptions.InvalidKeyTypeException;
-import exceptions.NullKeyException;
+package io.github.querables;
+
+import io.github.querables.exceptions.InvalidKeyTypeException;
+import io.github.querables.exceptions.NullKeyException;
 import lombok.val;
 import org.junit.Before;
 import org.junit.Test;

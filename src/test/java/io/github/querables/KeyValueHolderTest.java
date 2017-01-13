@@ -1,3 +1,5 @@
+package io.github.querables;
+
 import lombok.val;
 import org.junit.Before;
 import org.junit.Test;

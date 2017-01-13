@@ -1,4 +1,6 @@
-import exceptions.*;
+package io.github.querables;
+
+import io.github.querables.exceptions.*;
 import javafx.util.Pair;
 import lombok.val;
 import org.junit.Before;

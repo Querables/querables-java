@@ -1,4 +1,4 @@
-package exceptions;
+package io.github.querables.exceptions;
 
 public class InvalidKeyTypeException extends RuntimeException {
     public InvalidKeyTypeException(Class expected, Class actual) {

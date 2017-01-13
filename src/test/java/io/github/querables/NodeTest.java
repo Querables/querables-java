@@ -1,9 +1,8 @@
+package io.github.querables;
+
 import javafx.util.Pair;
 import lombok.val;
-import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Objects;
 
 import static org.junit.Assert.*;
 

@@ -1,3 +1,5 @@
+package io.github.querables;
+
 import org.junit.Before;
 import org.junit.Test;
 

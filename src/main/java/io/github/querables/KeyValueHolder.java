@@ -1,3 +1,5 @@
+package io.github.querables;
+
 import javafx.util.Pair;
 import lombok.Getter;
 

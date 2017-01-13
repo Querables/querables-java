@@ -1,3 +1,5 @@
+package io.github.querables;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
