@@ -1,5 +1,5 @@
 # querables-java
-Data structures for Java allowing more complex queries than standard ones.
+Data structures for Java allowing more complex queries than standard ones. ![alt img](https://travis-ci.org/Querables/querables-java.svg?branch=master)
 
 ## Description
 `QMap` interface allows you to use `get()` method with wildcards (currently expressed with `null` values) as key's fields.
