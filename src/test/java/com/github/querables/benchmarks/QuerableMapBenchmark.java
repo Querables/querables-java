@@ -1,6 +1,6 @@
-package io.github.querables.benchmarks;
+package com.github.querables.benchmarks;
 
-import io.github.querables.QuerableMap;
+import com.github.querables.QuerableMap;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.openjdk.jmh.annotations.*;

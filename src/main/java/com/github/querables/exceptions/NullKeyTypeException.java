@@ -1,4 +1,4 @@
-package io.github.querables.exceptions;
+package com.github.querables.exceptions;
 
 public class NullKeyTypeException extends RuntimeException {
     public NullKeyTypeException() {

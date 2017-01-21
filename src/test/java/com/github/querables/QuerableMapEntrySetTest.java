@@ -1,7 +1,7 @@
-package io.github.querables;
+package com.github.querables;
 
-import io.github.querables.exceptions.InvalidKeyTypeException;
-import io.github.querables.exceptions.NullKeyException;
+import com.github.querables.exceptions.InvalidKeyTypeException;
+import com.github.querables.exceptions.NullKeyException;
 import javafx.util.Pair;
 import lombok.val;
 import org.junit.Before;
