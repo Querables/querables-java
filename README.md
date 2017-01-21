@@ -11,7 +11,7 @@ class Person {
   private String surname;
 }
 
-QMap debts = new QuerableMap(Person.class);
+QMap<Person, Integer> debts = new QuerableMap<>(Person.class);
 
 debts.put(new Person("John", "Cena"), 100);  // John Cena borrowed $100
 debts.put(new Person("Eve", "Smith"), 50);   // Eve Smith borrowed $50
