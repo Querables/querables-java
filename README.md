@@ -28,4 +28,4 @@ debts.get(new Person(null, "Cena"));         // result: [100, 30]
 At the moment, only the `QuerableMap` implementation is available which is not thread-safe.
 
 ## Contribution
-All contributions via pull requests are welcome. If you would like to start working on a feature or a bug, please create an issue to give a headsup to avoid duplicated efforts.
+All contributions via pull requests are welcome. If you like to start working on a feature or a bug, please create an issue to give a headsup to avoid duplicated efforts.
